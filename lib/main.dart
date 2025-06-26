@@ -8,6 +8,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomeScreen());
+    return MaterialApp(
+      home: HomeScreen(),
+      theme: ThemeData().copyWith(
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF22A2BD)),
+      ),
+    );
   }
 }
