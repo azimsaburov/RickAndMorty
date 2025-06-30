@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rick_and_morty/constants/icon_paths.dart';
+import 'package:rick_and_morty/features/characters/ui/characters_screen.dart';
+import 'package:rick_and_morty/features/episodes/ui/episodes_screen.dart';
+import 'package:rick_and_morty/features/locations/ui/locations_screen.dart';
+import 'package:rick_and_morty/features/settings/ui/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: _activePage,
       bottomNavigationBar: BottomNavigationBar(
         items: _buildTabs(),
         currentIndex: _currentIndex,
@@ -59,4 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
         : Theme.of(context).colorScheme.outline,
     BlendMode.srcIn,
   );
+
+  Widget get _activePage {
+    switch (_currentIndex) {
+      case 0:
+        return CharactersScreen();
+      case 1:
+        return LocationsScreen();
+      case 2:
+        return EpisodesScreen();
+      case 3:
+        return SettingsScreen();
+      default:
+        return ErrorWidget(Exception('Неверный индекс на Старанице'));
+    }
+  }
 }
