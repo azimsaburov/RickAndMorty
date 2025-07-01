@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:rick_and_morty/api/dio_client.dart';
-import 'package:rick_and_morty/data/models/characters_models.dart';
+import 'package:rick_and_morty/data/models/characters/characters_models.dart';
+import 'package:rick_and_morty/data/models/locations/locations_models.dart';
 
 class ApiService {
   final Dio _dio;
 
   ApiService({required DioClient dioClient}) : _dio = dioClient.dio;
+
+//CHARACTERS
 
   Future<List<CharacterModel>> getCharactersByIdList(List<int> ids) async{
     String idList = ids.join(','); //[1,2,3] => '1,2,3'
@@ -24,5 +27,19 @@ class ApiService {
     CharacterModel character = CharacterModel.fromJson(res.data);
     return character;
   }
+
+
+
+
+
+
+//LOCATIONS
+
+  Future<LocationsModels> getLocationsById(int id) async{
+    Response res = await _dio.get('/location/$id');
+    LocationsModels location = LocationsModels.fromJson(res.data);
+    return location;
+  }
+
 
 }
