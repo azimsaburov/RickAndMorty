@@ -1,4 +1,4 @@
-class LocationsModels {
+class LocationsModel {
   final int id;
   final String name;
   final String type;
@@ -7,7 +7,7 @@ class LocationsModels {
   final String url;
   final String created;
 
-  LocationsModels({
+  LocationsModel({
     required this.id,
     required this.name,
     required this.type,
@@ -17,8 +17,8 @@ class LocationsModels {
     required this.created,
   });
 
-  factory LocationsModels.fromJson(Map<String, dynamic> json) {
-    return LocationsModels(
+  factory LocationsModel.fromJson(Map<String, dynamic> json) {
+    return LocationsModel(
       id: json['id'],
       name: json['name'],
       type: json['type'],

@@ -35,10 +35,21 @@ class ApiService {
 
 //LOCATIONS
 
-  Future<LocationsModels> getLocationsById(int id) async{
+  Future<LocationsModel> getLocationsById(int id) async{
     Response res = await _dio.get('/location/$id');
-    LocationsModels location = LocationsModels.fromJson(res.data);
+    LocationsModel location = LocationsModel.fromJson(res.data);
     return location;
+  }
+
+  Future<List<LocationsModel>> getLocationsByIdList(List<int> ids) async{
+    String idList = ids.join(','); //[1,2,3] => '1,2,3'
+    Response res = await _dio.get('/location/$idList');
+    List<LocationsModel> locations = [];
+    for(var element in res.data){
+      LocationsModel locationsModel = LocationsModel.fromJson(element);
+      locations.add(locationsModel);
+    }
+    return locations;
   }
 
 
