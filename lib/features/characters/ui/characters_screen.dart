@@ -9,6 +9,7 @@ class CharactersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ApiService(dioClient: DioClient()).getCharactersByIdList([13, 21, 48]);
     ApiService(dioClient: DioClient()).getCharactersById(539);
+    ApiService(dioClient: DioClient()).getCharacters();
     return SafeArea(
       child: Padding(
         padding: EdgeInsetsGeometry.all(16),
