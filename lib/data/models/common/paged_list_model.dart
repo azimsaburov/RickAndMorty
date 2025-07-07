@@ -1,4 +1,4 @@
-import 'package:rick_and_morty/data/models/characters/info_model.dart';
+import 'package:rick_and_morty/data/models/common/info_model.dart';
 
 class PagedListModel<T> {
   final InfoModel info;

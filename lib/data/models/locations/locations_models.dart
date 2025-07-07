@@ -23,7 +23,7 @@ class LocationsModel {
       name: json['name'],
       type: json['type'],
       dimension: json['dimension'],
-      residents: (json['residents'] as List).map((e) => e as String).toList(),
+      residents: ['residents'],
       url: json['url'],
       created: json['created'],
     );

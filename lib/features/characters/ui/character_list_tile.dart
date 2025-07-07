@@ -31,8 +31,30 @@ class CharacterListTile extends StatelessWidget {
             image: imageUrl,
           ),
         ),
-        Column(children: [Text(name), Text(status), Text('$species, $gender')]),
+        Column(
+          children: [
+            Text(name),
+            Text(
+              status,
+              style: Theme.of(
+                context,
+              ).textTheme.labelSmall?.copyWith(color: _getStatusColor(status)),
+            ),
+            Text('$species, $gender'),
+          ],
+        ),
       ],
     );
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'Alive':
+        return Colors.green;
+      case 'Dead':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
   }
 }
