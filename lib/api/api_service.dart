@@ -3,6 +3,7 @@ import 'package:rick_and_morty/api/dio_client.dart';
 import 'package:rick_and_morty/data/models/characters/characters_models.dart';
 import 'package:rick_and_morty/data/models/characters/paged_list_model.dart';
 import 'package:rick_and_morty/data/models/locations/locations_models.dart';
+import 'package:rick_and_morty/data/models/locations/paged_list_model.dart';
 
 class ApiService {
   final Dio _dio;
@@ -57,5 +58,13 @@ class ApiService {
       locations.add(locationsModel);
     }
     return locations;
+  }
+
+  Future<LPagedListModel> getLocations() async{
+    Response res = await _dio.get('/location');
+
+    LPagedListModel location = LPagedListModel.fromJson(res.data);
+    
+    return location;
   }
 }
