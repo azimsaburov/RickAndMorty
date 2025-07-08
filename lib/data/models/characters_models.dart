@@ -1,4 +1,4 @@
-import 'package:rick_and_morty/data/models/characters/location_short_model.dart';
+import 'package:rick_and_morty/data/models/location_short_model.dart';
 
 class CharacterModel {
   final int id;

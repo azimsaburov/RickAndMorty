@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:rick_and_morty/api/dio_client.dart';
-import 'package:rick_and_morty/data/models/characters/characters_models.dart';
+import 'package:rick_and_morty/data/models/characters_models.dart';
 import 'package:rick_and_morty/data/models/common/paged_list_model.dart';
-import 'package:rick_and_morty/data/models/locations/locations_models.dart';
+import 'package:rick_and_morty/data/models/locations_models.dart';
 
 class ApiService {
   final Dio _dio;
@@ -59,10 +59,9 @@ class ApiService {
     return locations;
   }
 
-  Future<PagedListModel> getLocations() async {
+  Future<PagedListModel<LocationsModel>> getLocations() async {
     Response res = await _dio.get('/location');
-
-    PagedListModel location = PagedListModel.fromJson(
+    PagedListModel<LocationsModel> location = PagedListModel.fromJson(
       res.data,
       LocationsModel.fromJson,
     );
