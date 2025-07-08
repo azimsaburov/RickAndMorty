@@ -33,14 +33,20 @@ class CharacterListTile extends StatelessWidget {
         ),
         Column(
           children: [
-            Text(name),
             Text(
               status,
               style: Theme.of(
                 context,
               ).textTheme.labelSmall?.copyWith(color: _getStatusColor(status)),
             ),
-            Text('$species, $gender'),
+            Text(name, style: Theme.of(context).textTheme.bodyMedium),
+
+            Text(
+              '$species, $gender',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).disabledColor,
+              ),
+            ),
           ],
         ),
       ],

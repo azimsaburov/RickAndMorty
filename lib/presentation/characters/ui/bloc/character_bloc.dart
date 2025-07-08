@@ -27,7 +27,10 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
 
     emit(
       CharacterLoaded(
-        data: state.data.copyWith(characters: pagedCharacters.results),
+        data: state.data.copyWith(
+          characters: pagedCharacters.results,
+          totalCount: pagedCharacters.info.count,
+        ),
       ),
     );
   }
