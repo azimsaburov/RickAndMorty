@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:rick_and_morty/api/dio_client.dart';
-import 'package:rick_and_morty/data/models/characters_models.dart';
-import 'package:rick_and_morty/data/models/common/paged_list_model.dart';
-import 'package:rick_and_morty/data/models/locations_models.dart';
+import 'package:rick_and_morty/data/models/characters_dto.dart';
+import 'package:rick_and_morty/data/models/common/paged_list_dto.dart';
+import 'package:rick_and_morty/data/models/locations_dto.dart';
 
 class ApiService {
   final Dio _dio;
@@ -11,59 +11,60 @@ class ApiService {
 
   //CHARACTERS
 
-  Future<List<CharacterModel>> getCharactersByIdList(List<int> ids) async {
+  Future<List<CharacterDto>> getCharactersByIdList(List<int> ids) async {
     String idList = ids.join(','); //[1,2,3] => '1,2,3'
     Response res = await _dio.get('/character/$idList');
-    List<CharacterModel> characters = [];
+    List<CharacterDto> characters = [];
     for (var element in res.data) {
-      CharacterModel characterModel = CharacterModel.fromJson(element);
+      CharacterDto characterModel = CharacterDto.fromJson(element);
       characters.add(characterModel);
     }
     return characters;
   }
 
+
   // res.data == Map<String, dynamic> это посути данные json
   // но помни что кроме data есть и другие данные например status или headers
-  Future<CharacterModel> getCharactersById(int id) async {
+  Future<CharacterDto> getCharactersById(int id) async {
     Response res = await _dio.get('/character/$id');
-    CharacterModel character = CharacterModel.fromJson(res.data);
+    CharacterDto character = CharacterDto.fromJson(res.data);
     return character;
   }
 
-  Future<PagedListModel<CharacterModel>> getCharacters() async {
+  Future<PagedListDto<CharacterDto>> getCharacters() async {
     Response res = await _dio.get('/character');
-    PagedListModel<CharacterModel> pagedList =
-        PagedListModel<CharacterModel>.fromJson(
+    PagedListDto<CharacterDto> pagedList =
+        PagedListDto<CharacterDto>.fromJson(
           res.data,
-          CharacterModel.fromJson,
+          CharacterDto.fromJson,
         );
     return pagedList;
   }
 
   //LOCATIONS
 
-  Future<LocationsModel> getLocationsById(int id) async {
+  Future<LocationsDto> getLocationsById(int id) async {
     Response res = await _dio.get('/location/$id');
-    LocationsModel location = LocationsModel.fromJson(res.data);
+    LocationsDto location = LocationsDto.fromJson(res.data);
     return location;
   }
 
-  Future<List<LocationsModel>> getLocationsByIdList(List<int> ids) async {
+  Future<List<LocationsDto>> getLocationsByIdList(List<int> ids) async {
     String idList = ids.join(','); //[1,2,3] => '1,2,3'
     Response res = await _dio.get('/location/$idList');
-    List<LocationsModel> locations = [];
+    List<LocationsDto> locations = [];
     for (var element in res.data) {
-      LocationsModel locationsModel = LocationsModel.fromJson(element);
+      LocationsDto locationsModel = LocationsDto.fromJson(element);
       locations.add(locationsModel);
     }
     return locations;
   }
 
-  Future<PagedListModel<LocationsModel>> getLocations() async {
+  Future<PagedListDto<LocationsDto>> getLocations() async {
     Response res = await _dio.get('/location');
-    PagedListModel<LocationsModel> location = PagedListModel.fromJson(
+    PagedListDto<LocationsDto> location = PagedListDto.fromJson(
       res.data,
-      LocationsModel.fromJson,
+      LocationsDto.fromJson,
     );
 
     return location;

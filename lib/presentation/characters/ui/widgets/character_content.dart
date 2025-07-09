@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty/data/models/characters_models.dart';
+import 'package:rick_and_morty/domain/models/character_entity.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_grid_tile.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_list_tile.dart';
 
 class CharacterContent extends StatelessWidget {
-  final List<CharacterModel> characters;
+  final List<CharacterEntity> characters;
   final bool isListView;
   const CharacterContent({
     super.key,

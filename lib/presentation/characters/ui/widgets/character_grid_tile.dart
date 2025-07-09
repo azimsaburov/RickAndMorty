@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty/constants/image_paths.dart';
+import 'package:rick_and_morty/domain/models/character_entity.dart';
 
 class CharacterGridTile extends StatelessWidget {
   final String name;
-  final String gender;
-  final String status;
+  final Gender gender;
+  final CharacterStatus status;
   final String species;
   final String imageUrl;
 
@@ -34,7 +35,7 @@ class CharacterGridTile extends StatelessWidget {
         ),
         SizedBox(height: 18),
         Text(
-          status,
+          status.name,
           style: Theme.of(
             context,
           ).textTheme.labelSmall?.copyWith(color: _getStatusColor(status)),
@@ -50,11 +51,11 @@ class CharacterGridTile extends StatelessWidget {
     );
   }
 
-  Color _getStatusColor(String status) {
+  Color _getStatusColor(CharacterStatus status) {
     switch (status) {
-      case 'Alive':
+      case CharacterStatus.alive:
         return Colors.green;
-      case 'Dead':
+      case CharacterStatus.dead:
         return Colors.red;
       default:
         return Colors.grey;

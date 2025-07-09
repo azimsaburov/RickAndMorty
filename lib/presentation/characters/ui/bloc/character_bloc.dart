@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:rick_and_morty/api/api_service.dart';
-import 'package:rick_and_morty/api/dio_client.dart';
-import 'package:rick_and_morty/data/models/characters_models.dart';
-import 'package:rick_and_morty/data/models/common/paged_list_model.dart';
+import 'package:rick_and_morty/data/repositories/character_repository_impl.dart';
+import 'package:rick_and_morty/domain/models/character_entity.dart';
+import 'package:rick_and_morty/domain/models/paged_list_entity.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_state_data.dart';
 
 part 'character_event.dart';
@@ -20,16 +19,13 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   ) async {
     emit(CharacterLoading(data: state.data));
 
-    ApiService service = ApiService(dioClient: DioClient());
-
-    PagedListModel<CharacterModel> pagedCharacters = await service
-        .getCharacters();
+    PagedListEntity<CharacterEntity> pagedCharacters = await  CharacterRepositoryImpl().getCharacters();
 
     emit(
       CharacterLoaded(
         data: state.data.copyWith(
           characters: pagedCharacters.results,
-          totalCount: pagedCharacters.info.count,
+          totalCount: pagedCharacters.count,
         ),
       ),
     );

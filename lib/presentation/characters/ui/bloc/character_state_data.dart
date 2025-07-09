@@ -1,7 +1,7 @@
-import 'package:rick_and_morty/data/models/characters_models.dart';
+import 'package:rick_and_morty/domain/models/character_entity.dart';
 
 class CharacterStateData {
-  final List<CharacterModel> characters;
+  final List<CharacterEntity> characters;
   final int totalCount;
 
   const CharacterStateData({required this.characters, this.totalCount = 0});
@@ -9,7 +9,7 @@ class CharacterStateData {
   const CharacterStateData.empty() : characters = const [], totalCount = 0;
 
   CharacterStateData copyWith({
-    List<CharacterModel>? characters,
+    List<CharacterEntity>? characters,
     int? totalCount,
   }) {
     return CharacterStateData(
