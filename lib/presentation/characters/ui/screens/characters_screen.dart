@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc.dart';
+import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
+import 'package:rick_and_morty/presentation/characters/ui/screens/character_search_screen.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_content.dart';
 import 'package:rick_and_morty/presentation/common/widgets/total_count_widget.dart';
 
@@ -31,6 +32,13 @@ class _CharactersScreenState extends State<CharactersScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SearchBar(
+                  
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => CharacterSearchScreen(),
+                    ),
+                  ),
+                  //enabled: false,
                   elevation: WidgetStatePropertyAll(0.5),
                   backgroundColor: WidgetStatePropertyAll(Color(0xFFF2F2F2)),
                   leading: IconButton(

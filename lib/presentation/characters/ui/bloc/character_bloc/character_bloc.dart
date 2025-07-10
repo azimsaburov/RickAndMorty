@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:rick_and_morty/data/repositories/character_repository_impl.dart';
 import 'package:rick_and_morty/domain/models/character_entity.dart';
 import 'package:rick_and_morty/domain/models/paged_list_entity.dart';
-import 'package:rick_and_morty/presentation/characters/ui/bloc/character_state_data.dart';
+import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_state_data.dart';
 
 part 'character_event.dart';
 part 'character_state.dart';
