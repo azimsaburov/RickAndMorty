@@ -4,3 +4,4 @@ part of 'character_bloc.dart';
 sealed class CharacterEvent {}
 
 final class LoadCharactersEvent extends CharacterEvent{}
+final class LoadNextCharactersPageEvent extends CharacterEvent{}

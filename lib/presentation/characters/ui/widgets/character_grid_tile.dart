@@ -22,34 +22,42 @@ class CharacterGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
-          height: 122,
-          clipBehavior: Clip.hardEdge,
-          child: FadeInImage.assetNetwork(
-            fit: BoxFit.fill,
-            placeholder: ImagePaths.rikAndMorty,
-            image: imageUrl,
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+            height: 122,
+            clipBehavior: Clip.hardEdge,
+            child: FadeInImage.assetNetwork(
+              fit: BoxFit.fill,
+              placeholder: ImagePaths.rikAndMorty,
+              image: imageUrl,
+            ),
           ),
-        ),
-        SizedBox(height: 18),
-        Text(
-          status.text,
-          style: Theme.of(
-            context,
-          ).textTheme.labelSmall?.copyWith(color: _getStatusColor(status)),
-        ),
-        Text(name, style: Theme.of(context).textTheme.bodyMedium),
-        Text(
-          '$species, ${gender.text}',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).disabledColor,
+          SizedBox(height: 18),
+          Text(
+            status.text,
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+              color: _getStatusColor(status),
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
-        ),
-      ],
+          Text(
+            name,
+            style: Theme.of(context).textTheme.bodyMedium,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            overflow: TextOverflow.ellipsis,
+            '$species, ${gender.text}',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: Theme.of(context).disabledColor,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

@@ -38,17 +38,23 @@ class CharacterListTile extends StatelessWidget {
           children: [
             Text(
               status.text,
-              style: Theme.of(
-                context,
-              ).textTheme.labelSmall?.copyWith(color: _getStatusColor(status)),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: _getStatusColor(status),
+              ),
+              overflow: TextOverflow.ellipsis,
             ),
-            Text(name, style: Theme.of(context).textTheme.bodyMedium),
-
+            Text(
+              name,
+              style: Theme.of(context).textTheme.bodyMedium,
+              overflow: TextOverflow.ellipsis,
+            ),
+        
             Text(
               '$species, ${gender.text}',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: Theme.of(context).disabledColor,
               ),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),

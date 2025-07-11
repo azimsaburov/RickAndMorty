@@ -13,12 +13,33 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
+  ScrollController controller = ScrollController();
   late bool isListView;
+  CharacterBloc get bloc => context.read<CharacterBloc>();
+
   @override
   void initState() {
-    context.read<CharacterBloc>().add(LoadCharactersEvent());
+    bloc.add(LoadCharactersEvent());
     isListView = true;
+    controller.addListener(() {
+      final bool isCloseToEnd =
+          controller.position.pixels >
+          controller.position.maxScrollExtent - 200;
+      final bool isNextPageLoadingPossible =
+          bloc.state is! CharacterNextPageLoading &&
+          bloc.state.data.hasNextPage;
+      if (isCloseToEnd && isNextPageLoadingPossible) {
+        //пробросить событие которая грузит след страницу
+        bloc.add(LoadNextCharactersPageEvent());
+      }
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -32,13 +53,11 @@ class _CharactersScreenState extends State<CharactersScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SearchBar(
-                  
                   onTap: () => Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => CharacterSearchScreen(),
                     ),
                   ),
-                  //enabled: false,
                   elevation: WidgetStatePropertyAll(0.5),
                   backgroundColor: WidgetStatePropertyAll(Color(0xFFF2F2F2)),
                   leading: IconButton(
@@ -75,6 +94,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
                 if (state is CharacterLoaded)
                   Expanded(
                     child: CharacterContent(
+                      controller: controller,
+                      showLoadingIndicator: state is CharacterNextPageLoading,
                       characters: state.data.characters,
                       isListView: isListView,
                     ),

@@ -22,7 +22,6 @@ class ApiService {
     return characters;
   }
 
-
   // res.data == Map<String, dynamic> это посути данные json
   // но помни что кроме data есть и другие данные например status или headers
   Future<CharacterDto> getCharactersById(int id) async {
@@ -31,13 +30,14 @@ class ApiService {
     return character;
   }
 
-  Future<PagedListDto<CharacterDto>> getCharacters() async {
-    Response res = await _dio.get('/character');
-    PagedListDto<CharacterDto> pagedList =
-        PagedListDto<CharacterDto>.fromJson(
-          res.data,
-          CharacterDto.fromJson,
-        );
+  Future<PagedListDto<CharacterDto>> getCharacters({int? page}) async {
+    Map<String, dynamic> queries = {if (page != null) 'page': page};
+
+    Response res = await _dio.get('/character', queryParameters: queries);
+    PagedListDto<CharacterDto> pagedList = PagedListDto<CharacterDto>.fromJson(
+      res.data,
+      CharacterDto.fromJson,
+    );
     return pagedList;
   }
 
