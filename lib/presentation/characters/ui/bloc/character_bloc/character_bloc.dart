@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:rick_and_morty/data/repositories/character_repository_impl.dart';
 import 'package:rick_and_morty/domain/models/character_entity.dart';
@@ -20,19 +21,28 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
   ) async {
     emit(CharacterLoading(data: state.data));
 
-    PagedListEntity<CharacterEntity> pagedCharacters =
-        await CharacterRepositoryImpl().getCharacters();
+    try {
+      PagedListEntity<CharacterEntity> pagedCharacters =
+          await CharacterRepositoryImpl().getCharacters(name: event.name);
 
-    emit(
-      CharacterLoaded(
-        data: state.data.copyWith(
-          characters: pagedCharacters.results,
-          totalCount: pagedCharacters.count,
-          page: 1,
-          hasNextPage: pagedCharacters.hasNextPage,
+      emit(
+        CharacterLoaded(
+          data: state.data.copyWith(
+            characters: pagedCharacters.results,
+            totalCount: pagedCharacters.count,
+            page: 1,
+            hasNextPage: pagedCharacters.hasNextPage,
+          ),
         ),
-      ),
-    );
+      );
+    } catch (e) {
+      if (e is DioException && e.response?.statusCode == 404) {
+        print('if worked');
+        emit(CharacterLoaded(data: state.data.copyWith(characters: [])),);
+      }else{
+        emit(CharacterError(message: '$e', data: state.data));
+      }
+    }
   }
 
   void _onLoadNextCharactersPage(
