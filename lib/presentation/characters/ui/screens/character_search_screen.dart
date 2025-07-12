@@ -20,6 +20,7 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
             spacing: 16,
             children: [
               TextField(
+                autofocus: true,
                 controller: controller,
                 style: Theme.of(context).textTheme.bodyMedium,
                 decoration: InputDecoration(
