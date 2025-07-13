@@ -17,12 +17,28 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
   final TextEditingController controller = TextEditingController();
   final CharacterBloc _characterBloc = CharacterBloc();
   Timer? _debounce;
+  final ScrollController scrollController = ScrollController();
+  late bool isCloseToEnd;
+  late bool isNext;
+
+  @override
+  void initState() {
+    scrollController.addListener(() {
+      isCloseToEnd = scrollController.position.pixels > scrollController.position.maxScrollExtent -200;
+      isNext = _characterBloc.state is! CharacterNextPageLoading && _characterBloc.state.data.hasNextPage;
+      if(isCloseToEnd && isNext){
+        _characterBloc.add(LoadNextCharactersPageEvent());
+      }
+    },);
+    super.initState();
+  }
 
   @override
   void dispose() {
     _debounce?.cancel();
     controller.dispose();
     _characterBloc.close();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -122,6 +138,7 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
                         );
                       }
                       return ListView.separated(
+                        controller: scrollController,
                         itemCount: characters.length,
                         separatorBuilder: (context, index) =>
                             SizedBox(height: 16),
