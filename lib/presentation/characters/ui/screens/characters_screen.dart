@@ -22,7 +22,18 @@ class _CharactersScreenState extends State<CharactersScreen> {
   void initState() {
     bloc.add(LoadCharactersEvent());
     isListView = true;
-    controller.addListener(() {
+    controller.addListener(_listener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(_listener);
+    controller.dispose();
+    super.dispose();
+  }
+
+  void _listener(){
       final bool isCloseToEnd =
           controller.position.pixels >
           controller.position.maxScrollExtent - 200;
@@ -33,14 +44,6 @@ class _CharactersScreenState extends State<CharactersScreen> {
         //пробросить событие которая грузит след страницу
         bloc.add(LoadNextCharactersPageEvent());
       }
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   @override

@@ -23,13 +23,7 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
 
   @override
   void initState() {
-    scrollController.addListener(() {
-      isCloseToEnd = scrollController.position.pixels > scrollController.position.maxScrollExtent -200;
-      isNext = _characterBloc.state is! CharacterNextPageLoading && _characterBloc.state.data.hasNextPage;
-      if(isCloseToEnd && isNext){
-        _characterBloc.add(LoadNextCharactersPageEvent());
-      }
-    },);
+    scrollController.addListener(_listener);
     super.initState();
   }
 
@@ -38,8 +32,21 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
     _debounce?.cancel();
     controller.dispose();
     _characterBloc.close();
+    scrollController.removeListener(_listener);
     scrollController.dispose();
     super.dispose();
+  }
+
+  void _listener() {
+    isCloseToEnd =
+        scrollController.position.pixels >
+        scrollController.position.maxScrollExtent - 200;
+    isNext =
+        _characterBloc.state is! CharacterNextPageLoading &&
+        _characterBloc.state.data.hasNextPage;
+    if (isCloseToEnd && isNext) {
+      _characterBloc.add(LoadNextCharactersPageEvent());
+    }
   }
 
   @override
@@ -139,11 +146,17 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
                       }
                       return ListView.separated(
                         controller: scrollController,
-                        itemCount: characters.length,
+                        itemCount: state is CharacterNextPageLoading
+                            ? characters.length + 1
+                            : characters.length,
                         separatorBuilder: (context, index) =>
                             SizedBox(height: 16),
                         padding: EdgeInsets.all(16),
                         itemBuilder: (context, index) {
+                          if (state is CharacterNextPageLoading &&
+                              index >= characters.length) {
+                            return Center(child: CircularProgressIndicator());
+                          }
                           return CharacterListTile(
                             name: characters[index].name,
                             gender: characters[index].gender,
