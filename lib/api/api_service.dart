@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:rick_and_morty/api/dio_client.dart';
 import 'package:rick_and_morty/data/models/characters_dto.dart';
 import 'package:rick_and_morty/data/models/common/paged_list_dto.dart';
+import 'package:rick_and_morty/data/models/episode_dto.dart';
 import 'package:rick_and_morty/data/models/locations_dto.dart';
 
 class ApiService {
@@ -74,5 +75,53 @@ class ApiService {
     );
 
     return location;
+  }
+
+  //EPISODE
+
+  Future<PagedListDto<EpisodeDto>> getEpisodes({
+    int? page,
+    String? name,
+  }) async {
+    Map<String, dynamic> queries = {
+      if (page != null) "page": page,
+      if (name != null) "name": name,
+    };
+
+    Response res = await _dio.get(
+      "/episode",
+      queryParameters: queries,
+    );
+
+    PagedListDto<EpisodeDto> pagedList = PagedListDto<EpisodeDto>.fromJson(
+      res.data,
+      EpisodeDto.fromJson,
+    );
+    return pagedList;
+  }
+
+  Future<List<EpisodeDto>> getEpisodesByIdList(List<int> ids) async {
+    String idList = ids.join(","); // [1, 2, 3] => "1,2,3"
+    Response res = await _dio.get(
+      "/episode/$idList",
+    ); // запрос на сервер => Response
+
+    List<EpisodeDto> episodes = [];
+    for (var element in res.data) {
+      EpisodeDto episodeDto = EpisodeDto.fromJson(
+        element,
+      );
+
+      episodes.add(episodeDto);
+    }
+
+    return episodes;
+  }
+
+  Future<EpisodeDto> getEpisodeById(int id) async {
+    Response res = await _dio.get("/episode/$id");
+
+    EpisodeDto episodeDto = EpisodeDto.fromJson(res.data);
+    return episodeDto;
   }
 }
