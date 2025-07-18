@@ -3,6 +3,7 @@ import 'package:rick_and_morty/constants/image_paths.dart';
 import 'package:rick_and_morty/domain/extensions/character_status_extension.dart';
 import 'package:rick_and_morty/domain/extensions/gender_extension.dart';
 import 'package:rick_and_morty/domain/models/character_entity.dart';
+import 'package:rick_and_morty/presentation/characters/ui/screens/character_details_screen.dart';
 
 class CharacterGridTile extends StatelessWidget {
   final String name;
@@ -10,6 +11,7 @@ class CharacterGridTile extends StatelessWidget {
   final CharacterStatus status;
   final String species;
   final String imageUrl;
+  final int id;
 
   const CharacterGridTile({
     super.key,
@@ -18,11 +20,20 @@ class CharacterGridTile extends StatelessWidget {
     required this.status,
     required this.species,
     required this.imageUrl,
+    required this.id,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CharacterDetailsScreen(id: id),
+          ),
+        );
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -39,9 +50,9 @@ class CharacterGridTile extends StatelessWidget {
           SizedBox(height: 18),
           Text(
             status.text,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-              color: _getStatusColor(status),
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.labelSmall?.copyWith(color: _getStatusColor(status)),
             overflow: TextOverflow.ellipsis,
           ),
           Text(
