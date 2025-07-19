@@ -11,6 +11,7 @@ class EpisodeMapper {
       characterIdList: dto.characters
           .map((e) => Utils.getIdFromUrl(e))
           .toList(),
+      episode: dto.episode,
     );
   }
 

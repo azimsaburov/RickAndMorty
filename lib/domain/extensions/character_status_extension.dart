@@ -1,14 +1,25 @@
+import 'package:flutter/material.dart';
 import 'package:rick_and_morty/domain/models/character_entity.dart';
 
 extension CharacterStatusExtension on CharacterStatus{
   String get text {
     switch (this){
       case CharacterStatus.alive:
-      return 'Живой';
+      return 'ЖИВОЙ';
       case CharacterStatus.dead:
-      return 'Мертвый';
+      return 'МЕРТВЫЙ';
       case CharacterStatus.unknown:
-      return 'Не известно';
+      return 'НЕ ИЗВЕСТНО';
+    }
+  }
+  Color get color {
+    switch (this){
+      case CharacterStatus.alive:
+      return Colors.green;
+      case CharacterStatus.dead:
+      return Colors.red;
+      case CharacterStatus.unknown:
+      return Colors.grey;
     }
   }
 }
