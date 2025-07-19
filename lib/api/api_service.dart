@@ -101,9 +101,12 @@ class ApiService {
   }
 
   Future<List<EpisodeDto>> getEpisodesByIdList(List<int> ids) async {
+    if(ids.isEmpty){
+      return [];
+    }
     String idList = ids.join(","); // [1, 2, 3] => "1,2,3"
     Response res = await _dio.get(
-      "/episode/$idList",
+      "/episode/$idList,",
     ); // запрос на сервер => Response
 
     List<EpisodeDto> episodes = [];

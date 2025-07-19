@@ -43,7 +43,7 @@ class CharacterGridTile extends StatelessWidget {
             clipBehavior: Clip.hardEdge,
             child: FadeInImage.assetNetwork(
               fit: BoxFit.fill,
-              placeholder: ImagePaths.rikAndMorty,
+              placeholder: ImagePaths.placeholder,
               image: imageUrl,
             ),
           ),

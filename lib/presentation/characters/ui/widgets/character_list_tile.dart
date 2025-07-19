@@ -42,7 +42,7 @@ class CharacterListTile extends StatelessWidget {
             height: 74,
             clipBehavior: Clip.hardEdge,
             child: FadeInImage.assetNetwork(
-              placeholder: ImagePaths.rikAndMorty,
+              placeholder: ImagePaths.placeholder,
               image: imageUrl,
             ),
           ),
