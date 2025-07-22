@@ -22,10 +22,14 @@ class CharacterRepositoryImpl extends CharacterRepository {
   Future<PagedListEntity<CharacterEntity>> getCharacters({
     int? page,
     String? name,
+    CharacterStatus? characterStatus,
+    Gender? gender,
   }) async {
     final PagedListDto<CharacterDto> res = await apiService.getCharacters(
       page: page,
       name: name,
+      status: characterStatus?.name,
+      gender: gender?.name,
     );
     return PagedListMapper<CharacterEntity, CharacterDto>().fromDto(
       res,

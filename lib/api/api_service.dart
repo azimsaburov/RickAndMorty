@@ -34,10 +34,18 @@ class ApiService {
   Future<PagedListDto<CharacterDto>> getCharacters({
     int? page,
     String? name,
+    String? species,
+    String? status,
+    String? type,
+    String? gender,
   }) async {
     Map<String, dynamic> queries = {
       if (page != null) 'page': page,
       if (name != null) 'name': name,
+      if (species != null) 'species': species,
+      if (status != null) 'status': status,
+      if (type != null) 'type': type,
+      if (gender != null) 'gender': gender,
     };
 
     Response res = await _dio.get('/character', queryParameters: queries);
@@ -88,10 +96,7 @@ class ApiService {
       if (name != null) "name": name,
     };
 
-    Response res = await _dio.get(
-      "/episode",
-      queryParameters: queries,
-    );
+    Response res = await _dio.get("/episode", queryParameters: queries);
 
     PagedListDto<EpisodeDto> pagedList = PagedListDto<EpisodeDto>.fromJson(
       res.data,
@@ -101,7 +106,7 @@ class ApiService {
   }
 
   Future<List<EpisodeDto>> getEpisodesByIdList(List<int> ids) async {
-    if(ids.isEmpty){
+    if (ids.isEmpty) {
       return [];
     }
     String idList = ids.join(","); // [1, 2, 3] => "1,2,3"
@@ -111,9 +116,7 @@ class ApiService {
 
     List<EpisodeDto> episodes = [];
     for (var element in res.data) {
-      EpisodeDto episodeDto = EpisodeDto.fromJson(
-        element,
-      );
+      EpisodeDto episodeDto = EpisodeDto.fromJson(element);
 
       episodes.add(episodeDto);
     }

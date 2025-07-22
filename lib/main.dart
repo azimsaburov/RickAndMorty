@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
 import 'package:rick_and_morty/home_screen.dart';
+import 'package:rick_and_morty/presentation/characters/ui/bloc/filter_cubit/filter_cubit.dart';
 import 'package:rick_and_morty/theme_constants.dart';
 
 void main() {
@@ -22,7 +23,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => CharacterBloc())],
+      providers: [
+        BlocProvider(create: (context) => CharacterBloc()),
+        BlocProvider(create: (context) => FilterCubit()),
+      ],
       child: MaterialApp(home: HomeScreen(), theme: ThemeConstants.lightTheme),
     );
   }

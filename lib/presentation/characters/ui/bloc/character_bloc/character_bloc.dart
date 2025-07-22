@@ -23,7 +23,11 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
 
     try {
       PagedListEntity<CharacterEntity> pagedCharacters =
-          await CharacterRepositoryImpl().getCharacters(name: event.name);
+          await CharacterRepositoryImpl().getCharacters(
+            name: event.name,
+            characterStatus: event.characterStatus,
+            gender: event.gender,
+          );
 
       emit(
         CharacterLoaded(
@@ -37,9 +41,9 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       );
     } catch (e) {
       if (e is DioException && e.response?.statusCode == 404) {
-       // print('if worked');
-        emit(CharacterLoaded(data: state.data.copyWith(characters: [])),);
-      }else{
+        // print('if worked');
+        emit(CharacterLoaded(data: state.data.copyWith(characters: [])));
+      } else {
         emit(CharacterError(message: '$e', data: state.data));
       }
     }
@@ -55,7 +59,9 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
       PagedListEntity<CharacterEntity> pagedCharacters =
           await CharacterRepositoryImpl().getCharacters(
             page: state.data.page + 1,
-            name: event.name
+            name: event.name,
+            characterStatus: event.characterStatus,
+            gender: event.gender,
           );
       emit(
         CharacterLoaded(

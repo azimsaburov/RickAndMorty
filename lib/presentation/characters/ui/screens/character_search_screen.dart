@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/constants/image_paths.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
+import 'package:rick_and_morty/presentation/characters/ui/bloc/filter_cubit/filter_cubit.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_list_tile.dart';
 
 class CharacterSearchScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
   late bool isCloseToEnd;
   late bool isNext;
   String searchQuery = '';
+  FilterCubit get filterCubit => context.read<FilterCubit>();
 
   @override
   void initState() {
@@ -46,7 +48,13 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
         _characterBloc.state is! CharacterNextPageLoading &&
         _characterBloc.state.data.hasNextPage;
     if (isCloseToEnd && isNext) {
-      _characterBloc.add(LoadNextCharactersPageEvent(name: searchQuery));
+      _characterBloc.add(
+        LoadNextCharactersPageEvent(
+          name: searchQuery,
+          gender: filterCubit.state.selectGender,
+          characterStatus: filterCubit.state.selectStatus,
+        ),
+      );
     }
   }
 
@@ -164,7 +172,7 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
                             status: characters[index].status,
                             species: characters[index].species,
                             imageUrl: characters[index].image,
-                             id: characters[index].id,
+                            id: characters[index].id,
                           );
                         },
                       );
@@ -183,7 +191,13 @@ class _CharacterSearchScreenState extends State<CharacterSearchScreen> {
   void _onSearchChenged(String query) {
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
-      _characterBloc.add(LoadCharactersEvent(name: query));
+      _characterBloc.add(
+        LoadCharactersEvent(
+          name: query,
+          gender: filterCubit.state.selectGender,
+          characterStatus: filterCubit.state.selectStatus,
+        ),
+      );
       searchQuery = query;
     });
   }
