@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/character_bloc/character_bloc.dart';
 import 'package:rick_and_morty/presentation/characters/ui/bloc/filter_cubit/filter_cubit.dart';
+import 'package:rick_and_morty/presentation/characters/ui/screens/character_filter_screen.dart';
 import 'package:rick_and_morty/presentation/characters/ui/screens/character_search_screen.dart';
 import 'package:rick_and_morty/presentation/characters/ui/widgets/character_content.dart';
 import 'package:rick_and_morty/presentation/common/widgets/search_container.dart';
@@ -81,7 +82,13 @@ class _CharactersScreenState extends State<CharactersScreen> {
                         ),
                       );
                     },
-                    onFilterPressed: () {},
+                    onFilterPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CharacterFilterScreen(),
+                        ),
+                      );
+                    },
                   ),
                   SizedBox(height: 20),
                   Row(
