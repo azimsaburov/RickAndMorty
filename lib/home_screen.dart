@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rick_and_morty/constants/icon_paths.dart';
 import 'package:rick_and_morty/presentation/characters/ui/screens/characters_screen.dart';
-import 'package:rick_and_morty/presentation/episodes/ui/episodes_screen.dart';
+import 'package:rick_and_morty/presentation/episodes/ui/screens/episodes_screen.dart';
 import 'package:rick_and_morty/presentation/locations/ui/locations_screen.dart';
 import 'package:rick_and_morty/presentation/settings/ui/settings_screen.dart';
 
