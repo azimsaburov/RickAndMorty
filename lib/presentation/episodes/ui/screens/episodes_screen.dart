@@ -18,6 +18,8 @@ class EpisodesScreen extends StatelessWidget {
                 SearchContainer(label: 'Найти эпизод', onSearchPressed: () {}),
                 SizedBox(height: 35),
                 Text("Episodes"),
+                SizedBox(height: 12,),
+                FlutterLogo( size: 100),
               ],
             );
           },
