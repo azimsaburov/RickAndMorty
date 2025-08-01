@@ -15,7 +15,7 @@ class _EpisodesScreenState extends State<EpisodesScreen> {
 
 @override
   void initState() {
-    
+
     super.initState();
   }
 
@@ -33,7 +33,7 @@ class _EpisodesScreenState extends State<EpisodesScreen> {
                 SizedBox(height: 35),
                 Text("Episodes"),
                 SizedBox(height: 12,),
-                EpisodeContent(episodes: state.data.episodes),
+                Expanded(child: EpisodeContent(episodes: state.data.episodes)),
                 // FlutterLogo( size: 100),
               ],
             );

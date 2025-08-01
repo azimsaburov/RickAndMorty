@@ -19,12 +19,12 @@ class EpisodeRepositoryImpl extends EpisodeRepository {
 
   @override
   Future<PagedListEntity<EpisodeEntity>> getEpisodes({int? page, String? name}) async{
-    final res = await apiService. getEpisodes();
+    final res = await apiService.getEpisodes();
     return PagedListMapper<EpisodeEntity, EpisodeDto>().fromDto(res, EpisodeMapper.fromDto);
   }
 
   @override
-  Future<List<EpisodeEntity>> getEpisodesByIds(List<int> ids)async {
+  Future<List<EpisodeEntity>> getEpisodesByIds(List<int> ids) async {
     final res = await apiService.getEpisodesByIdList(ids);
     return res.map((e)=> EpisodeMapper.fromDto(e)).toList();
   }
