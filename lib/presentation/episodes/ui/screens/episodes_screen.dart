@@ -2,9 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/presentation/common/widgets/search_container.dart';
 import 'package:rick_and_morty/presentation/episodes/ui/bloc/episode_bloc.dart';
+import 'package:rick_and_morty/presentation/episodes/ui/widgets/episode_content.dart';
 
-class EpisodesScreen extends StatelessWidget {
+class EpisodesScreen extends StatefulWidget {
   const EpisodesScreen({super.key});
+
+  @override
+  State<EpisodesScreen> createState() => _EpisodesScreenState();
+}
+class _EpisodesScreenState extends State<EpisodesScreen> {
+
+
+@override
+  void initState() {
+    
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +33,8 @@ class EpisodesScreen extends StatelessWidget {
                 SizedBox(height: 35),
                 Text("Episodes"),
                 SizedBox(height: 12,),
-                FlutterLogo( size: 100),
+                EpisodeContent(episodes: state.data.episodes),
+                // FlutterLogo( size: 100),
               ],
             );
           },
